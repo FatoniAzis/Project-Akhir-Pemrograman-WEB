@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrasi Wajah Baru</title>
+    <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #f4f6f9; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
+        .container { background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 500px; text-align: center; }
+        h2 { margin-bottom: 15px; color: #333; }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+        input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+        .camera-area { width: 100%; height: 300px; background: #000; border-radius: 8px; overflow: hidden; margin-bottom: 20px; position: relative; }
+        video { width: 100%; height: 100%; object-fit: cover; }
+        .status { padding: 10px; background: #fff3cd; color: #856404; border-radius: 6px; margin-bottom: 15px; font-size: 14px; font-weight: bold; }
+        .btn { width: 100%; padding: 12px; border: none; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s; }
+        .btn-primary { background: #1cc88a; color: white; }
+        .btn-primary:hover { background: #17a673; }
+        .link-back { display: inline-block; margin-top: 15px; color: #4e73df; text-decoration: none; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Pendaftaran Mahasiswa Baru</h2>
+    <div class="status" id="status-reg">Memuat model AI...</div>
+
+    <div class="camera-area">
+        <video id="webcam-reg" autoplay muted playsinline></video>
+    </div>
+
+    <div class="form-group">
+        <label for="nama">Nama Lengkap</label>
+        <input type="text" id="nama" placeholder="Masukkan nama lengkap">
+    </div>
+    <div class="form-group">
+        <label for="nim">NIM / NIK</label>
+        <input type="text" id="nim" placeholder="Masukkan NIM">
+    </div>
+
+    <button class="btn btn-primary" id="btn-daftar" disabled onclick="prosesRegistrasi()">Daftarkan Wajah</button>
+    <a href="index.html" class="link-back">← Kembali ke Absensi</a>
+</div>
+
+<script src="registrasi.js"></script>
+</body>
+</html>
