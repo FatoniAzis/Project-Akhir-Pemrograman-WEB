@@ -19,7 +19,8 @@
         .btn { width: 100%; padding: 12px; border: none; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s; }
         .btn-primary { background: #1cc88a; color: white; }
         .btn-primary:hover { background: #17a673; }
-        .link-back { display: inline-block; margin-top: 15px; color: #4e73df; text-decoration: none; font-size: 14px; }
+        .link-back { display: inline-block; margin-top: 15px; color: #4e73df; text-decoration: none; font-size: 14px; font-weight: bold; }
+        .link-back:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -42,7 +43,8 @@
     </div>
 
     <button class="btn btn-primary" id="btn-daftar" disabled onclick="prosesRegistrasi()">Daftarkan Wajah</button>
-    <a href="index.html" class="link-back">← Kembali ke Absensi</a>
+    
+    <a href="dashboard_dosen.php" class="link-back">← Kembali ke Dashboard Dosen</a>
 </div>
 
 <script src="registrasi.js"></script>

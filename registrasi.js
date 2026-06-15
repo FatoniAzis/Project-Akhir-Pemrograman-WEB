@@ -72,7 +72,7 @@ const detection = await faceapi.detectSingleFace(video, opsiDetektor)
     .then(data => {
         if (data.success) {
             alert("Registrasi Berhasil!");
-            window.location.href = "index.html";
+            window.location.href = "dashboard_dosen.php";
         } else {
             alert("Gagal mendaftar: " + data.message);
             statusReg.innerText = "Gagal menyimpan ke database.";

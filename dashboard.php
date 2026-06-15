@@ -1,4 +1,14 @@
 <?php
+// --- TAMBAHAN: Proteksi Session Admin ---
+session_start();
+
+// Cek apakah session login admin sudah ada. Jika belum, tendang kembali ke login.php
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    header("Location: login.php");
+    exit;
+}
+// ----------------------------------------
+
 // 1. Koneksi ke Database
 $host = "localhost"; $user = "root"; $pass = ""; $db = "absensi_db";
 $conn = new mysqli($host, $user, $pass, $db);
@@ -29,9 +39,16 @@ $result = $conn->query($sql);
         .header-box { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 2px solid #f0f0f0; padding-bottom: 15px; }
         h2 { color: #4e73df; }
         
+        /* Wadah untuk tombol aksi di kanan */
+        .btn-group { display: flex; gap: 10px; }
+        
         .btn { padding: 10px 18px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; text-decoration: none; transition: 0.3s; font-size: 14px; }
         .btn-primary { background: #4e73df; color: white; }
         .btn-primary:hover { background: #2e59d9; }
+        
+        /* TAMBAHAN: Gaya Tombol Logout Merah */
+        .btn-danger { background: #e74a3b; color: white; }
+        .btn-danger:hover { background: #be2617; }
         
         /* Gaya Tabel Responsif */
         .table-responsive { width: 100%; overflow-x: auto; margin-top: 15px; }
@@ -54,8 +71,14 @@ $result = $conn->query($sql);
         <div>
             <h2>Dasbor Log Kehadiran</h2>
             <p>Data hasil pemindaian kamera Face Recognition secara real-time.</p>
+            <p style="font-size: 14px; color: #5a5c69; margin-top: 5px;">
+                Administrator: <strong style="color: #4e73df;"><?php echo htmlspecialchars($_SESSION['admin_username']); ?></strong>
+            </p>
         </div>
-        <a href="index.html" class="btn btn-primary">← Menu Utama Absen</a>
+        <div class="btn-group">
+            <a href="index.html" class="btn btn-primary">← Menu Utama Absen</a>
+            <a href="logout.php" class="btn btn-danger">Keluar (Logout)</a>
+        </div>
     </div>
 
     <div class="table-responsive">

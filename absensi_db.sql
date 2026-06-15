@@ -1,20 +1,220 @@
-CREATE DATABASE IF NOT EXISTS absensi_db;
-USE absensi_db;
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 15 Jun 2026 pada 17.14
+-- Versi server: 10.4.32-MariaDB
+-- Versi PHP: 8.0.30
 
--- Tabel untuk menyimpan data pengguna/mahasiswa
-CREATE TABLE IF NOT EXISTS pengguna (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nama VARCHAR(100) NOT NULL,
-    nim_nik VARCHAR(50) NOT NULL UNIQUE,
-    -- Menyimpan koordinat vektor wajah dalam bentuk teks JSON
-    fitur_wajah TEXT NOT NULL 
-);
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
--- Tabel untuk mencatat riwayat absensi
-CREATE TABLE IF NOT EXISTS riwayat_absensi (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    pengguna_id INT,
-    waktu_absen TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    STATUS ENUM('Hadir', 'Terlambat') DEFAULT 'Hadir',
-    FOREIGN KEY (pengguna_id) REFERENCES pengguna(id) ON DELETE CASCADE
-);
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `absensi_db`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `admin`
+--
+
+INSERT INTO `admin` (`id`, `username`, `password`) VALUES
+(1, 'admin', '$2y$10$OtUbt9brFTMb3xSTdrVhu.Yq0oifRaCZFSMYppXz6tQKnL7Y/PX6i');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `dosen`
+--
+
+CREATE TABLE `dosen` (
+  `id` int(11) NOT NULL,
+  `nidn_nip` varchar(30) NOT NULL,
+  `nama_dosen` varchar(100) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `dosen`
+--
+
+INSERT INTO `dosen` (`id`, `nidn_nip`, `nama_dosen`, `username`, `password`) VALUES
+(9, '25SA31A028', 'Alif Wiki D.', 'admin', 'admin123');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `mata_kuliah`
+--
+
+CREATE TABLE `mata_kuliah` (
+  `id` int(11) NOT NULL,
+  `kode_matkul` varchar(20) NOT NULL,
+  `nama_matkul` varchar(100) NOT NULL,
+  `dosen_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `mata_kuliah`
+--
+
+INSERT INTO `mata_kuliah` (`id`, `kode_matkul`, `nama_matkul`, `dosen_id`) VALUES
+(3, 'ADM', 'Admin', 9);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pengguna`
+--
+
+CREATE TABLE `pengguna` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `nim_nik` varchar(50) NOT NULL,
+  `fitur_wajah` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `pengguna`
+--
+
+INSERT INTO `pengguna` (`id`, `nama`, `nim_nik`, `fitur_wajah`) VALUES
+(2, 'Alif Wiki Danuarta', '25SA31A028', '[-0.20261327922344208,0.1714296191930771,0.06175724044442177,-0.0371379554271698,-0.10136613249778748,0.04256676509976387,-0.05651925131678581,-0.10796858370304108,0.1507849097251892,-0.11203555762767792,0.3093188405036926,-0.06013740226626396,-0.21991977095603943,-0.12420064210891724,-0.047907013446092606,0.22070668637752533,-0.2076011747121811,-0.22493048012256622,0.006265917327255011,-0.0334060899913311,0.06892990320920944,-0.062097519636154175,-0.049896951764822006,0.019313231110572815,-0.13534364104270935,-0.34028953313827515,-0.05232488736510277,-0.10985187441110611,-0.029405757784843445,-0.10717766731977463,-0.03691522404551506,0.06033940240740776,-0.17887099087238312,-0.025741061195731163,-0.010659015737473965,0.10162383317947388,0.03382229432463646,-0.0007154658087529242,0.20201587677001953,-0.023099660873413086,-0.23537270724773407,0.009568240493535995,0.07264469563961029,0.26566749811172485,0.19319280982017517,-0.00495497602969408,-0.027319714426994324,-0.0761738047003746,0.07752499729394913,-0.13479219377040863,0.012741584330797195,0.17794258892536163,0.15607216954231262,0.08084438741207123,-0.022948838770389557,-0.1519576907157898,-0.03338511288166046,0.0645444318652153,-0.11294383555650711,-0.03210361301898956,0.023053573444485664,-0.1377779245376587,-0.04099259153008461,-0.1282339096069336,0.26531848311424255,0.05531731992959976,-0.13485129177570343,-0.16431006789207458,0.14227509498596191,-0.05069226399064064,-0.09765204787254333,0.08001917600631714,-0.18037830293178558,-0.18222618103027344,-0.3120010495185852,0.06814387440681458,0.3956143856048584,0.07422444969415665,-0.21646185219287872,0.09066669642925262,-0.04513745382428169,-0.066810242831707,0.026666298508644104,0.2086872011423111,0.008425693958997726,0.05738842487335205,-0.03788360580801964,-0.022780099883675575,0.1697978973388672,-0.033964160829782486,-0.03800474479794502,0.18246428668498993,-0.05661867931485176,0.08358394354581833,0.024005480110645294,0.02292824164032936,-0.001581499702297151,0.014821371994912624,-0.09766528755426407,-0.053451355546712875,-0.057158902287483215,-0.07652521133422852,-0.038906924426555634,0.06784296780824661,-0.1689959019422531,0.06474867463111877,0.035470400005578995,0.08671564608812332,-0.049343083053827286,0.03864734247326851,-0.02351956255733967,-0.05502311512827873,0.13811568915843964,-0.30118459463119507,0.18951861560344696,0.19890710711479187,0.013779177330434322,0.15593813359737396,0.1571912169456482,0.0940878689289093,0.004717766772955656,-0.009833239018917084,-0.17524515092372894,-0.009689470753073692,0.0981651246547699,-0.043258775025606155,0.09296569973230362,0.049471091479063034]');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `riwayat_absensi`
+--
+
+CREATE TABLE `riwayat_absensi` (
+  `id` int(11) NOT NULL,
+  `pengguna_id` int(11) DEFAULT NULL,
+  `mata_kuliah_id` int(11) DEFAULT NULL,
+  `waktu_absen` timestamp NOT NULL DEFAULT current_timestamp(),
+  `STATUS` enum('Hadir','Terlambat') DEFAULT 'Hadir'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `riwayat_absensi`
+--
+
+INSERT INTO `riwayat_absensi` (`id`, `pengguna_id`, `mata_kuliah_id`, `waktu_absen`, `STATUS`) VALUES
+(1, 2, NULL, '2026-06-14 08:54:21', 'Hadir'),
+(2, 2, 3, '2026-06-15 14:42:46', 'Hadir');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indeks untuk tabel `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
+-- Indeks untuk tabel `dosen`
+--
+ALTER TABLE `dosen`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `nidn_nip` (`nidn_nip`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
+-- Indeks untuk tabel `mata_kuliah`
+--
+ALTER TABLE `mata_kuliah`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `kode_matkul` (`kode_matkul`),
+  ADD KEY `dosen_id` (`dosen_id`);
+
+--
+-- Indeks untuk tabel `pengguna`
+--
+ALTER TABLE `pengguna`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `nim_nik` (`nim_nik`);
+
+--
+-- Indeks untuk tabel `riwayat_absensi`
+--
+ALTER TABLE `riwayat_absensi`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `pengguna_id` (`pengguna_id`);
+
+--
+-- AUTO_INCREMENT untuk tabel yang dibuang
+--
+
+--
+-- AUTO_INCREMENT untuk tabel `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `dosen`
+--
+ALTER TABLE `dosen`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT untuk tabel `mata_kuliah`
+--
+ALTER TABLE `mata_kuliah`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT untuk tabel `pengguna`
+--
+ALTER TABLE `pengguna`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT untuk tabel `riwayat_absensi`
+--
+ALTER TABLE `riwayat_absensi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `mata_kuliah`
+--
+ALTER TABLE `mata_kuliah`
+  ADD CONSTRAINT `mata_kuliah_ibfk_1` FOREIGN KEY (`dosen_id`) REFERENCES `dosen` (`id`) ON DELETE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `riwayat_absensi`
+--
+ALTER TABLE `riwayat_absensi`
+  ADD CONSTRAINT `riwayat_absensi_ibfk_1` FOREIGN KEY (`pengguna_id`) REFERENCES `pengguna` (`id`) ON DELETE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
